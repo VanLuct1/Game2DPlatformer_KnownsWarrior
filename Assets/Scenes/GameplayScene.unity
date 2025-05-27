@@ -447,6 +447,17 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &972367639 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6276035002608308489, guid: 177aec6fe8597b74790acbd336fc8714, type: 3}
+  m_PrefabInstance: {fileID: 3257023857442476092}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da57e14c9d5b1ff429ff9876d52464d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1164403222
 GameObject:
   m_ObjectHideFlags: 0
@@ -7952,9 +7963,37 @@ PrefabInstance:
       propertyPath: m_Name
       value: SkeletonKnight
       objectReference: {fileID: 0}
+    - target: {fileID: 6224250994792006038, guid: 177aec6fe8597b74790acbd336fc8714, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7362921402332372955, guid: 177aec6fe8597b74790acbd336fc8714, type: 3}
+      propertyPath: damageableHit.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7362921402332372955, guid: 177aec6fe8597b74790acbd336fc8714, type: 3}
+      propertyPath: damageableHit.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 972367639}
+    - target: {fileID: 7362921402332372955, guid: 177aec6fe8597b74790acbd336fc8714, type: 3}
+      propertyPath: damageableHit.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7362921402332372955, guid: 177aec6fe8597b74790acbd336fc8714, type: 3}
+      propertyPath: damageableHit.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnHit
+      objectReference: {fileID: 0}
+    - target: {fileID: 7362921402332372955, guid: 177aec6fe8597b74790acbd336fc8714, type: 3}
+      propertyPath: damageableHit.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Skeleton, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7362921402332372955, guid: 177aec6fe8597b74790acbd336fc8714, type: 3}
+      propertyPath: damageableHit.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 7924942640160138724, guid: 177aec6fe8597b74790acbd336fc8714, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.19
+      value: -7.11
       objectReference: {fileID: 0}
     - target: {fileID: 7924942640160138724, guid: 177aec6fe8597b74790acbd336fc8714, type: 3}
       propertyPath: m_LocalPosition.y
@@ -8129,6 +8168,10 @@ PrefabInstance:
     - target: {fileID: 7092381963400149044, guid: f08e6aa6095d17f4e903047d96029dc0, type: 3}
       propertyPath: m_ActionEvents.Array.data[3].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 8286235150943974950, guid: f08e6aa6095d17f4e903047d96029dc0, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
