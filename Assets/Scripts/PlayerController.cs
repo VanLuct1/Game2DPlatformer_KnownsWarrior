@@ -4,14 +4,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(Rigidbody2D), typeof(TouchingDirections))]
+[RequireComponent(typeof(Rigidbody2D), typeof(TouchingDirections), typeof(Damageable))]
 public class PlayerController : MonoBehaviour
 {
     public float moveSpeed = 5f;
     Vector2 moveInput;
 
     public float jumpForce = 5f;
-
+    Damageable damageable;
     public float CurrentMoveSpeed{ get
         {
             if (CanMove)
@@ -59,34 +59,50 @@ public class PlayerController : MonoBehaviour
     public bool CanMove { get
         {
             return anm.GetBool(AnimationStrings.canMove);
-        } }
-
+        }
+    }
+    //Điều chỉnh damage
+    public bool IsAlive
+    {
+        get
+        {
+            return anm.GetBool(AnimationStrings.isAlive);
+        }
+    }
 
     Rigidbody2D rb;
     Animator anm;
-
     TouchingDirections touchingDirections;
-
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         anm = GetComponent<Animator>();
         touchingDirections = GetComponent<TouchingDirections>();
+        damageable = GetComponent<Damageable>();
     }
 
 
     void FixedUpdate()
     {
-        rb.velocity = new Vector2(moveInput.x * CurrentMoveSpeed, rb.velocity.y);
+        if (!damageable.LockVelocity)
+            rb.velocity = new Vector2(moveInput.x * CurrentMoveSpeed, rb.velocity.y);
         anm.SetFloat(AnimationStrings.yVelocity, rb.velocity.y);
     }
     //ham di chuyen walk
     public void OnMove(InputAction.CallbackContext context)
     {
         moveInput = context.ReadValue<Vector2>();
-        IsMoving = moveInput != Vector2.zero;
 
-        SetFacingDirection(moveInput);
+        if (IsAlive)
+        {
+            IsMoving = moveInput != Vector2.zero;
+
+            SetFacingDirection(moveInput);
+        }
+        else
+        {
+            IsMoving = false;
+        }
     }
     private void SetFacingDirection(Vector2 moveInput)
     {
@@ -115,4 +131,10 @@ public class PlayerController : MonoBehaviour
             anm.SetTrigger(AnimationStrings.attackTrigger);
         }
     }
+
+    // Update the OnHit method to use the private setter of LockVelocity.
+    public void OnHit(int damage, Vector2 knockback)
+    {
+        rb.velocity = new Vector2(knockback.x, rb.velocity.y + knockback.y);
+    }//
 }
