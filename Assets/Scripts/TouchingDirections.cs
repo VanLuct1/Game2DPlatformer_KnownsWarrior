@@ -64,6 +64,9 @@ public class TouchingDirections : MonoBehaviour
             anm.SetBool(AnimationStrings.isOnCeiling, value);
         }
     }
+
+    public Vector2 WalkDirectionVector { get; internal set; }
+
     private void Awake()
     {
         touchingCol = GetComponent<CapsuleCollider2D>();

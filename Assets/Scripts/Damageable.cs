@@ -6,7 +6,8 @@ using UnityEngine.Events;
 public class Damageable : MonoBehaviour
 {
     public UnityEvent<int, Vector2> damageableHit;
-
+    public UnityEvent damageableDeath;
+    public UnityEvent <int, int> healthChanged;
     Animator anm;
 
     [SerializeField]
@@ -34,7 +35,8 @@ public class Damageable : MonoBehaviour
         set
         {
             _health = value;
-            if(_health <= 0)
+            healthChanged?.Invoke(_health, MaxHealth);
+            if (_health <= 0)
             {
                 IsAlive = false;
             }
@@ -59,7 +61,12 @@ public class Damageable : MonoBehaviour
         {
             _isAlive = value;
             anm.SetBool(AnimationStrings.isAlive, value);
-            Debug.Log("IsAlice set: " + value);
+
+            if (value == false)
+            {
+                damageableDeath.Invoke();
+                // Trigger death animation
+            }
         }
     }
     // Modify the LockVelocity property to include a private setter so it can be assigned internally.
@@ -94,19 +101,49 @@ public class Damageable : MonoBehaviour
     }
     public bool Hit(int damage, Vector2 knockback)
     {
-        if(IsAlive && !isInvincible)
+        if (IsAlive && !isInvincible)
         {
             Health -= damage;
             isInvincible = true;
-            ///////////////////////////////////////
-            anm.SetTrigger(AnimationStrings.hitTrigger);
-            LockVelocity = true; // Lock the velocity when hit
-            damageableHit?.Invoke(damage, knockback);
 
+            // Nếu anm null thì không gọi SetTrigger
+            if (anm != null)
+            {
+                anm.SetTrigger(AnimationStrings.hitTrigger);
+                LockVelocity = true;
+            }
+            else
+            {
+                Debug.LogWarning("Animator is missing on " + gameObject.name);
+            }
+
+            damageableHit?.Invoke(damage, knockback);
+            CharacterEvents.characterDamaged.Invoke(gameObject, damage);
 
             return true;
         }
         return false;
     }
+
+    public void Heal(int healRestore)
+    {
+        if (IsAlive)
+        {
+            int maxHealth = Mathf.Max(MaxHealth - Health, 0);
+            int actualHeal = Mathf.Min(maxHealth, healRestore);
+            Health += actualHeal;
+
+            CharacterEvents.characterHealed.Invoke(gameObject, actualHeal);
+        }
+    }
+    public void TakeDamage(int amount)
+    {
+        Health -= amount;
+        if (anm != null)
+        {
+            anm.SetTrigger("hit"); // 🔥 Kích hoạt animation bị đánh
+        }
+    }
+
 }
 
